@@ -1,8 +1,8 @@
 package repository;
 
-import model.Model;
+import entity.ModelEntity;
 
-public interface ModelRepository extends Repository<Model> {
+public interface ModelRepository extends Repository<ModelEntity> {
 
 
 }

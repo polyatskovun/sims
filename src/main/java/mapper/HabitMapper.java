@@ -1,14 +1,19 @@
 package mapper;
 
 import dto.HabitDto;
+import entity.HabitEntity;
 import model.Habit;
 import org.mapstruct.Mapper;
 
 @Mapper
 public interface HabitMapper {
 
-    Habit toModel(HabitDto dto);
+    Habit fromDtoToModel(HabitDto dto);
 
-    HabitDto toDto(Habit model);
+    HabitDto fromModelToDto(Habit model);
+
+    Habit fromEntityToModel (HabitEntity entity);
+
+    HabitEntity fromModelToEntity (Habit model);
 
 }

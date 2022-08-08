@@ -1,6 +1,8 @@
 package service;
 
-import dto.CaseDto;
+import entity.CaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import mapper.CaseMapper;
 import model.Case;
 import org.mapstruct.factory.Mappers;
@@ -10,26 +12,28 @@ import repository.impl.CaseRepositoryImpl;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
 public class CaseService {
 
-    private final CaseMapper mapper = Mappers.getMapper(CaseMapper.class);
-    private final CaseRepository repository = CaseRepositoryImpl.getInstance();
+    private CaseMapper mapper = Mappers.getMapper(CaseMapper.class);
+    private CaseRepository repository = CaseRepositoryImpl.getInstance();
 
-    public CaseDto create(CaseDto dto) {
-        Case modelCase = repository.create(mapper.toModel(dto));
-        return mapper.toDto(modelCase);
+    public Case create(Case model) {
+        CaseEntity caseEntity = repository.create(mapper.fromModelToEntity(model));
+        return mapper.fromEntityToModel(caseEntity);
     }
 
-    public CaseDto update (CaseDto dto){
-        Case model = repository.update(mapper.toModel(dto));
-        return mapper.toDto(model);
+    public Case update(Case model) {
+        CaseEntity caseEntity = repository.update(mapper.fromModelToEntity(model));
+        return mapper.fromEntityToModel(caseEntity);
     }
 
-    public  void delete (CaseDto dto){
-        repository.delete(mapper.toModel(dto));
+    public void delete(Case model) {
+        repository.delete(mapper.fromModelToEntity(model));
     }
 
-    public Set<CaseDto> findAll(){
-        return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toSet());
+    public Set<Case> findAll() {
+        return repository.findAll().stream().map(mapper::fromEntityToModel).collect(Collectors.toSet());
     }
 }

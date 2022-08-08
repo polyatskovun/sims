@@ -1,7 +1,7 @@
 package repository;
 
-import model.Habit;
+import entity.HabitEntity;
 
-public interface HabitRepository extends Repository<Habit> {
+public interface HabitRepository extends Repository<HabitEntity> {
 
 }

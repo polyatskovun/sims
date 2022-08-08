@@ -1,10 +1,10 @@
 package repository.impl;
 
+import entity.HabitEntity;
+import entity.ModelEntity;
 import enums.Age;
 import enums.Needs;
 import enums.Sex;
-import model.Habit;
-import model.Model;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -12,10 +12,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ModelRepositoryImplTest {
-
+class ModelEntityRepositoryImplTest {
 
 
     @Test
@@ -28,10 +27,10 @@ class ModelRepositoryImplTest {
         needsAlex.put(Needs.COMMUNICATION, 100);
         needsAlex.put(Needs.ENTERTAINMENT, 100);
         needsAlex.put(Needs.HEALTHY, 100);
-        Set<Habit> set1 = new HashSet<>();
-        Model model = new Model("Alex", Age.ADULT, Sex.MAN, 200, needsAlex, set1, null, null);
+        Set<HabitEntity> set1 = new HashSet<>();
+        ModelEntity modelEntity = new ModelEntity(null, "Alex", Age.ADULT, Sex.MAN, 200, needsAlex, set1, null, null);
 
-        repository.create(model);
+        repository.create(modelEntity);
 
         assertEquals(1, repository.getSet().size());
     }
@@ -46,31 +45,31 @@ class ModelRepositoryImplTest {
         needsAlex.put(Needs.COMMUNICATION, 100);
         needsAlex.put(Needs.ENTERTAINMENT, 100);
         needsAlex.put(Needs.HEALTHY, 100);
-        Set<Habit> set1 = new HashSet<>();
-        Model model = new Model("Alex", Age.ADULT, Sex.WOMAN, 200, needsAlex, set1, null, null);
+        Set<HabitEntity> set1 = new HashSet<>();
+        ModelEntity modelEntity = new ModelEntity(null, "Alex", Age.ADULT, Sex.WOMAN, 200, needsAlex, set1, null, null);
 
-        Model updateModel = repository.update(model);
+        ModelEntity updateModelEntity = repository.update(modelEntity);
 
-        assertEquals(Sex.WOMAN, updateModel.getSex());
+        assertEquals(Sex.WOMAN, updateModelEntity.getSex());
     }
 
     @Test
     void delete() {
         ModelRepositoryImpl repository = ModelRepositoryImpl.getInstance(true);
-        Model model = repository.getSet().iterator().next();
+        ModelEntity modelEntity = repository.getSet().iterator().next();
 
-        repository.delete(model);
+        repository.delete(modelEntity);
 
-        assertEquals(1 , repository.getSet().size());
+        assertEquals(1, repository.getSet().size());
     }
 
     @Test
     void findAll() {
         ModelRepositoryImpl repository = ModelRepositoryImpl.getInstance(true);
 
-        Set <Model> modelSet = repository.findAll();
+        Set<ModelEntity> modelEntitySet = repository.findAll();
 
-        assertEquals(2, modelSet.size());
+        assertEquals(2, modelEntitySet.size());
 
     }
 
@@ -78,8 +77,8 @@ class ModelRepositoryImplTest {
     void findByName() {
         ModelRepositoryImpl repository = ModelRepositoryImpl.getInstance(true);
 
-        Model model = repository.findByName("Alex");
+        ModelEntity modelEntity = repository.findByName("Alex");
 
-        assertEquals(200, model.getMoney());
+        assertEquals(200, modelEntity.getMoney());
     }
 }

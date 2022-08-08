@@ -1,11 +1,15 @@
 package model;
 
+import entity.CaseEntity;
+import entity.HabitEntity;
+import entity.ProfessionEntity;
 import enums.Age;
 import enums.Needs;
 import enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Builder
+@NoArgsConstructor
 public class Model {
 
     private Integer id;
@@ -21,9 +26,7 @@ public class Model {
     private Sex sex;
     private int money;
     private Map<Needs, Integer> needs;
-    private Set<Habit> habits;
-    private Profession profession;
-    private Case roundCase;
-
-
+    private Set<HabitEntity> habitEntities;
+    private ProfessionEntity professionEntity;
+    private CaseEntity roundCaseEntity;
 }

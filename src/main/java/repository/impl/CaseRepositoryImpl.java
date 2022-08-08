@@ -1,11 +1,11 @@
 package repository.impl;
 
+import entity.CaseEntity;
 import enums.Needs;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import model.Case;
 import repository.CaseRepository;
 
 import java.util.*;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class CaseRepositoryImpl implements CaseRepository {
 
     private static CaseRepositoryImpl instance;
-    Set<Case> set = new HashSet<>();
+    Set<CaseEntity> set = new HashSet<>();
 
     private CaseRepositoryImpl(boolean isInitDefaultData) {
         if (isInitDefaultData) {
@@ -27,7 +27,7 @@ public class CaseRepositoryImpl implements CaseRepository {
             Map<Needs, Integer> needsUnsuccessful = new HashMap<>();
             needsUnsuccessful.put(Needs.COMMUNICATION, 5);
             needsUnsuccessful.put(Needs.ENTERTAINMENT, -10);
-            create(new Case("Meet", 30, needsSuccessful, needsUnsuccessful));
+            create(new CaseEntity("Meet", 30, needsSuccessful, needsUnsuccessful));
         }
     }
 
@@ -47,37 +47,37 @@ public class CaseRepositoryImpl implements CaseRepository {
 
 
     @Override
-    public Case create(Case entity) {
+    public CaseEntity create(CaseEntity entity) {
         set.add(entity);
         return entity;
     }
 
     @Override
-    public Case update(Case entity) {
-        Optional<Case> optional = set.stream().filter(x -> x.getName().equals(entity.getName())).findFirst();
+    public CaseEntity update(CaseEntity entity) {
+        Optional<CaseEntity> optional = set.stream().filter(x -> x.getName().equals(entity.getName())).findFirst();
         if (optional.isPresent()) {
-            Case caseForUpdate = optional.get();
-            caseForUpdate.setTime(entity.getTime());
-            caseForUpdate.setNeedsSuccessful(entity.getNeedsSuccessful());
-            caseForUpdate.setNeedsUnsuccessful(entity.getNeedsUnsuccessful());
-            return caseForUpdate;
+            CaseEntity caseEntityForUpdate = optional.get();
+            caseEntityForUpdate.setTime(entity.getTime());
+            caseEntityForUpdate.setNeedsSuccessful(entity.getNeedsSuccessful());
+            caseEntityForUpdate.setNeedsUnsuccessful(entity.getNeedsUnsuccessful());
+            return caseEntityForUpdate;
         } else {
             return create(entity);
         }
     }
 
     @Override
-    public void delete(Case entity) {
+    public void delete(CaseEntity entity) {
         set = set.stream().filter(x -> !x.getName().equals(entity.getName())).collect(Collectors.toSet());
     }
 
     @Override
-    public Set<Case> findAll() {
+    public Set<CaseEntity> findAll() {
         return set;
     }
 
-    public Case findByName(String name) {
-        for (Case x : set) {
+    public CaseEntity findByName(String name) {
+        for (CaseEntity x : set) {
             if (x.getName().equals(name)) {
                 return x;
             }

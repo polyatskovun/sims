@@ -1,8 +1,8 @@
 package repository.impl;
 
 
+import entity.CaseEntity;
 import enums.Needs;
-import model.Case;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,21 +10,21 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CaseRepositoryImplTest {
+class CaseEntityRepositoryImplTest {
 
     @org.junit.jupiter.api.Test
     void create() {
         CaseRepositoryImpl repository = CaseRepositoryImpl.getInstance(false);
-        Map<Needs, Integer> needsSuccessful= new HashMap<>();
+        Map<Needs, Integer> needsSuccessful = new HashMap<>();
         needsSuccessful.put(Needs.COMMUNICATION, 30);
         needsSuccessful.put(Needs.ENTERTAINMENT, 20);
-        Map<Needs, Integer> needsUnsuccessful =new HashMap<>();
+        Map<Needs, Integer> needsUnsuccessful = new HashMap<>();
         needsUnsuccessful.put(Needs.COMMUNICATION, 5);
         needsUnsuccessful.put(Needs.ENTERTAINMENT, -10);
-        Case Meet = new Case("Meet", 30, needsSuccessful, needsUnsuccessful );
+        CaseEntity Meet = new CaseEntity("Meet", 30, needsSuccessful, needsUnsuccessful);
 
         repository.create(Meet);
-        
+
         assertEquals(1, repository.getSet().size());
         assertEquals(30, repository.getSet().iterator().next().getTime());
 
@@ -33,13 +33,13 @@ class CaseRepositoryImplTest {
     @org.junit.jupiter.api.Test
     void update() {
         CaseRepositoryImpl repository = CaseRepositoryImpl.getInstance(true);
-        Map<Needs, Integer> needsSuccessful= new HashMap<>();
+        Map<Needs, Integer> needsSuccessful = new HashMap<>();
         needsSuccessful.put(Needs.COMMUNICATION, 30);
         needsSuccessful.put(Needs.ENTERTAINMENT, 20);
-        Map<Needs, Integer> needsUnsuccessful =new HashMap<>();
+        Map<Needs, Integer> needsUnsuccessful = new HashMap<>();
         needsUnsuccessful.put(Needs.COMMUNICATION, 5);
         needsUnsuccessful.put(Needs.ENTERTAINMENT, -10);
-        Case Meet = new Case("Meet", 50, needsSuccessful, needsUnsuccessful );
+        CaseEntity Meet = new CaseEntity("Meet", 50, needsSuccessful, needsUnsuccessful);
 
         repository.update(Meet);
 
@@ -49,13 +49,13 @@ class CaseRepositoryImplTest {
     @org.junit.jupiter.api.Test
     void delete() {
         CaseRepositoryImpl repository = CaseRepositoryImpl.getInstance(true);
-        Map<Needs, Integer> needsSuccessful= new HashMap<>();
+        Map<Needs, Integer> needsSuccessful = new HashMap<>();
         needsSuccessful.put(Needs.COMMUNICATION, 30);
         needsSuccessful.put(Needs.ENTERTAINMENT, 20);
-        Map<Needs, Integer> needsUnsuccessful =new HashMap<>();
+        Map<Needs, Integer> needsUnsuccessful = new HashMap<>();
         needsUnsuccessful.put(Needs.COMMUNICATION, 5);
         needsUnsuccessful.put(Needs.ENTERTAINMENT, -10);
-        Case Meet = new Case("Meet", 50, needsSuccessful, needsUnsuccessful );
+        CaseEntity Meet = new CaseEntity("Meet", 50, needsSuccessful, needsUnsuccessful);
 
         repository.delete(Meet);
 
@@ -66,9 +66,9 @@ class CaseRepositoryImplTest {
     void findAll() {
         CaseRepositoryImpl repository = CaseRepositoryImpl.getInstance(true);
 
-        Set <Case> setCase = repository.findAll();
+        Set<CaseEntity> setCaseEntity = repository.findAll();
 
-        assertEquals(1, setCase.size());
+        assertEquals(1, setCaseEntity.size());
         assertEquals(30, repository.getSet().iterator().next().getTime());
     }
 
@@ -76,7 +76,7 @@ class CaseRepositoryImplTest {
     void findByName() {
         CaseRepositoryImpl repository = CaseRepositoryImpl.getInstance(true);
 
-        Case caseMeet = repository.findByName("Meet");
+        CaseEntity caseEntityMeet = repository.findByName("Meet");
 
         assertEquals(30, repository.getSet().iterator().next().getTime());
     }

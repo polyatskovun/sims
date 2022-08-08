@@ -1,5 +1,7 @@
 package repository.impl;
 
+import entity.HabitEntity;
+import entity.ModelEntity;
 import enums.Age;
 import enums.Needs;
 import enums.Sex;
@@ -7,8 +9,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import model.Habit;
-import model.Model;
 import repository.ModelRepository;
 
 import java.util.*;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class ModelRepositoryImpl implements ModelRepository {
 
     private static ModelRepositoryImpl instance;
-    Set<Model> set = new HashSet<>();
+    Set<ModelEntity> set = new HashSet<>();
     private Integer idCounter = 1;
 
     private ModelRepositoryImpl(boolean isInitDefaultData) {
@@ -32,8 +32,8 @@ public class ModelRepositoryImpl implements ModelRepository {
             needsAlex.put(Needs.COMMUNICATION, 100);
             needsAlex.put(Needs.ENTERTAINMENT, 100);
             needsAlex.put(Needs.HEALTHY, 100);
-            Set<Habit> set1 = new HashSet<>();
-            create(new Model("Alex", Age.ADULT, Sex.MAN, 200, needsAlex, set1, null, null));
+            Set<HabitEntity> set1 = new HashSet<>();
+            create(new ModelEntity(null, "Alex", Age.ADULT, Sex.MAN, 200, needsAlex, set1, null, null));
 
             Map<Needs, Integer> needsPeter = new HashMap<>();
             needsPeter.put(Needs.FOOD, 100);
@@ -42,8 +42,8 @@ public class ModelRepositoryImpl implements ModelRepository {
             needsPeter.put(Needs.COMMUNICATION, 100);
             needsPeter.put(Needs.ENTERTAINMENT, 100);
             needsPeter.put(Needs.HEALTHY, 100);
-            Set<Habit> set2 = new HashSet<>();
-            create(new Model("Peter", Age.ADULT, Sex.MAN, 350, needsPeter, set2, null, null));
+            Set<HabitEntity> set2 = new HashSet<>();
+            create(new ModelEntity(null, "Peter", Age.ADULT, Sex.MAN, 350, needsPeter, set2, null, null));
         }
     }
 
@@ -66,7 +66,7 @@ public class ModelRepositoryImpl implements ModelRepository {
     }
 
     @Override
-    public Model create(Model entity) {
+    public ModelEntity create(ModelEntity entity) {
         set.add(entity);
         if (entity.getId() == null) {
             entity.setId(createID());
@@ -75,37 +75,37 @@ public class ModelRepositoryImpl implements ModelRepository {
     }
 
     @Override
-    public Model update(Model entity) {
-        Optional<Model> modelUpdate = set.stream().filter(x -> x.getId().equals(entity.getId())).findFirst();
+    public ModelEntity update(ModelEntity entity) {
+        Optional<ModelEntity> modelUpdate = set.stream().filter(x -> x.getId().equals(entity.getId())).findFirst();
         if (modelUpdate.isPresent()) {
-            Model model = modelUpdate.get();
-            model.setAge(entity.getAge());
-            model.setName(entity.getName());
-            model.setHabits(entity.getHabits());
-            model.setNeeds(entity.getNeeds());
-            model.setMoney(entity.getMoney());
-            model.setProfession(entity.getProfession());
-            model.setSex(entity.getSex());
-            model.setRoundCase(entity.getRoundCase());
-            return model;
+            ModelEntity modelEntity = modelUpdate.get();
+            modelEntity.setAge(entity.getAge());
+            modelEntity.setName(entity.getName());
+            modelEntity.setHabitEntities(entity.getHabitEntities());
+            modelEntity.setNeeds(entity.getNeeds());
+            modelEntity.setMoney(entity.getMoney());
+            modelEntity.setProfessionEntity(entity.getProfessionEntity());
+            modelEntity.setSex(entity.getSex());
+            modelEntity.setRoundCaseEntity(entity.getRoundCaseEntity());
+            return modelEntity;
         } else {
             return create(entity);
         }
     }
 
     @Override
-    public void delete(Model entity) {
+    public void delete(ModelEntity entity) {
         set = set.stream().filter(x -> !x.getId().equals(entity.getId())).collect(Collectors.toSet());
     }
 
     @Override
-    public Set<Model> findAll() {
+    public Set<ModelEntity> findAll() {
         return set;
     }
 
 
-    public Model findByName(String name) {
-        for (Model x : set) {
+    public ModelEntity findByName(String name) {
+        for (ModelEntity x : set) {
             if (x.getName().equals(name)) {
                 return x;
             }
@@ -113,8 +113,8 @@ public class ModelRepositoryImpl implements ModelRepository {
         return null;
     }
 
-    private Model findById(Integer id) {
-        for (Model x : set) {
+    private ModelEntity findById(Integer id) {
+        for (ModelEntity x : set) {
             if (x.getId().equals(id)) {
                 return x;
             }

@@ -1,7 +1,7 @@
 package repository;
 
-import model.Case;
+import entity.CaseEntity;
 
-public interface CaseRepository extends Repository<Case> {
+public interface CaseRepository extends Repository<CaseEntity> {
 
 }

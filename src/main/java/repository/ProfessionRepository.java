@@ -1,7 +1,7 @@
 package repository;
 
-import model.Profession;
+import entity.ProfessionEntity;
 
-public interface ProfessionRepository extends Repository<Profession> {
+public interface ProfessionRepository extends Repository<ProfessionEntity> {
 
 }

@@ -1,28 +1,27 @@
 package repository.impl;
 
+import entity.HabitEntity;
 import enums.Needs;
-import model.Habit;
 import org.junit.jupiter.api.Test;
-import repository.HabitRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class HabitRepositoryImplTest {
+class HabitEntityRepositoryImplTest {
 
     @Test
     void create() {
         HabitRepositoryImpl repository = HabitRepositoryImpl.getInstance(false);
         Map<Needs, Integer> needsCommunicative = new HashMap<>();
         needsCommunicative.put(Needs.COMMUNICATION, 5);
-        Habit habit = new Habit("communicative", needsCommunicative);
+        HabitEntity habitEntity = new HabitEntity("communicative", needsCommunicative);
 
-        repository.create(habit);
+        repository.create(habitEntity);
 
         assertEquals(1, repository.getSet().size());
     }
@@ -32,9 +31,9 @@ class HabitRepositoryImplTest {
         HabitRepositoryImpl repository = HabitRepositoryImpl.getInstance(true);
         Map<Needs, Integer> needsCommunicative = new HashMap<>();
         needsCommunicative.put(Needs.COMMUNICATION, 10);
-        Habit habit = new Habit("communicative", needsCommunicative);
+        HabitEntity habitEntity = new HabitEntity("communicative", needsCommunicative);
 
-        repository.update(habit);
+        repository.update(habitEntity);
 
         assertEquals(10, Objects.requireNonNull(findByName("communicative", repository.getSet())).getNeeds().get(Needs.COMMUNICATION));
     }
@@ -45,9 +44,9 @@ class HabitRepositoryImplTest {
         int startSize = repository.getSet().size();
         Map<Needs, Integer> needsCommunicative = new HashMap<>();
         needsCommunicative.put(Needs.COMMUNICATION, 5);
-        Habit habit = new Habit("communicative", needsCommunicative);
+        HabitEntity habitEntity = new HabitEntity("communicative", needsCommunicative);
 
-        repository.delete(habit);
+        repository.delete(habitEntity);
 
         assertEquals(startSize - 1, repository.getSet().size());
     }
@@ -56,7 +55,7 @@ class HabitRepositoryImplTest {
     void findAll() {
         HabitRepositoryImpl repository = HabitRepositoryImpl.getInstance(true);
 
-        Set<Habit> habitSet = repository.findAll();
+        Set<HabitEntity> habitEntitySet = repository.findAll();
 
         assertEquals(2, repository.getSet().size());
     }
@@ -65,15 +64,15 @@ class HabitRepositoryImplTest {
     void findByName() {
         HabitRepositoryImpl repository = HabitRepositoryImpl.getInstance(true);
 
-        Habit habit = repository.findByName("insatiable");
+        HabitEntity habitEntity = repository.findByName("insatiable");
 
-        assertEquals(-10, habit.getNeeds().get(Needs.FOOD));
+        assertEquals(-10, habitEntity.getNeeds().get(Needs.FOOD));
     }
 
-    private Habit findByName(String name, Set<Habit> set) {
-        for (Habit habit : set) {
-            if (habit.getName().equals(name)) {
-                return habit;
+    private HabitEntity findByName(String name, Set<HabitEntity> set) {
+        for (HabitEntity habitEntity : set) {
+            if (habitEntity.getName().equals(name)) {
+                return habitEntity;
             }
         }
         return null;

@@ -1,17 +1,16 @@
 package repository.impl;
 
+import entity.ProfessionEntity;
 import enums.Needs;
-import model.Habit;
-import model.Profession;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ProfessionRepositoryImplTest {
+class ProfessionEntityRepositoryImplTest {
 
     @Test
     void create() {
@@ -23,9 +22,9 @@ class ProfessionRepositoryImplTest {
         needsCook.put(Needs.COMMUNICATION, 0);
         needsCook.put(Needs.HEALTHY, -5);
         needsCook.put(Needs.TOILET, 0);
-        Profession profession = new Profession("cook", 450, 600, needsCook);
+        ProfessionEntity professionEntity = new ProfessionEntity("cook", 450, 600, needsCook);
 
-        repository.create(profession);
+        repository.create(professionEntity);
 
         assertEquals(1, repository.getSet().size());
     }
@@ -40,19 +39,19 @@ class ProfessionRepositoryImplTest {
         needsCook.put(Needs.COMMUNICATION, 0);
         needsCook.put(Needs.HEALTHY, -5);
         needsCook.put(Needs.TOILET, 0);
-        Profession profession = new Profession("cook", 550, 600, needsCook);
+        ProfessionEntity professionEntity = new ProfessionEntity("cook", 550, 600, needsCook);
 
-        Profession professionUpdate = repository.update(profession);
+        ProfessionEntity professionEntityUpdate = repository.update(professionEntity);
 
-        assertEquals(550, professionUpdate.getIncome());
+        assertEquals(550, professionEntityUpdate.getIncome());
     }
 
     @Test
     void delete() {
         ProfessionRepositoryImpl repository = ProfessionRepositoryImpl.getInstance(true);
-        Profession profession = new Profession("cook", 450, 600, null);
+        ProfessionEntity professionEntity = new ProfessionEntity("cook", 450, 600, null);
 
-        repository.delete(profession);
+        repository.delete(professionEntity);
 
         assertEquals(1, repository.getSet().size());
     }
@@ -61,17 +60,17 @@ class ProfessionRepositoryImplTest {
     void findAll() {
         ProfessionRepositoryImpl repository = ProfessionRepositoryImpl.getInstance(true);
 
-        Set<Profession> professionSet = repository.findAll();
+        Set<ProfessionEntity> professionEntitySet = repository.findAll();
 
-        assertEquals(2, professionSet.size());
+        assertEquals(2, professionEntitySet.size());
     }
 
     @Test
     void findByName() {
         ProfessionRepositoryImpl repository = ProfessionRepositoryImpl.getInstance(true);
 
-        Profession profession = repository.findByName("police");
+        ProfessionEntity professionEntity = repository.findByName("police");
 
-        assertEquals(600, profession.getIncome());
+        assertEquals(600, professionEntity.getIncome());
     }
 }

@@ -1,11 +1,11 @@
 package repository.impl;
 
+import entity.HabitEntity;
 import enums.Needs;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import model.Habit;
 import repository.HabitRepository;
 
 import java.util.*;
@@ -17,17 +17,17 @@ import java.util.stream.Collectors;
 public class HabitRepositoryImpl implements HabitRepository {
 
     private static HabitRepositoryImpl instance;
-    Set<Habit> set = new HashSet<>();
+    Set<HabitEntity> set = new HashSet<>();
 
     private HabitRepositoryImpl(boolean isInitDefaultData) {
         if (isInitDefaultData) {
             Map<Needs, Integer> needsInsatiable = new HashMap<>();
             needsInsatiable.put(Needs.FOOD, -10);
-            create(new Habit("insatiable", needsInsatiable));
+            create(new HabitEntity("insatiable", needsInsatiable));
 
             Map<Needs, Integer> needsCommunicative = new HashMap<>();
             needsCommunicative.put(Needs.COMMUNICATION, 5);
-            create(new Habit("communicative", needsCommunicative));
+            create(new HabitEntity("communicative", needsCommunicative));
         }
     }
 
@@ -46,35 +46,35 @@ public class HabitRepositoryImpl implements HabitRepository {
     }
 
     @Override
-    public Habit create(Habit entity) {
+    public HabitEntity create(HabitEntity entity) {
         set.add(entity);
         return entity;
     }
 
     @Override
-    public Habit update(Habit entity) {
-        Optional<Habit> optional = set.stream().filter(x -> x.getName().equals(entity.getName())).findFirst();
+    public HabitEntity update(HabitEntity entity) {
+        Optional<HabitEntity> optional = set.stream().filter(x -> x.getName().equals(entity.getName())).findFirst();
         if (optional.isPresent()) {
-            Habit habitForUpdate = optional.get();
-            habitForUpdate.setNeeds(entity.getNeeds());
-            return habitForUpdate;
+            HabitEntity habitEntityForUpdate = optional.get();
+            habitEntityForUpdate.setNeeds(entity.getNeeds());
+            return habitEntityForUpdate;
         } else {
             return create(entity);
         }
     }
 
     @Override
-    public void delete(Habit entity) {
+    public void delete(HabitEntity entity) {
         set = set.stream().filter(x -> !x.getName().equals(entity.getName())).collect(Collectors.toSet());
     }
 
     @Override
-    public Set<Habit> findAll() {
+    public Set<HabitEntity> findAll() {
         return set;
     }
 
-    public Habit findByName(String name) {
-        for (Habit x : set) {
+    public HabitEntity findByName(String name) {
+        for (HabitEntity x : set) {
             if (x.getName().equals(name)) {
                 return x;
             }

@@ -1,9 +1,9 @@
 package service;
 
-import dto.HabitDto;
-import dto.ModelDto;
+import entity.ModelEntity;
+import lombok.Getter;
+import lombok.Setter;
 import mapper.ModelMapper;
-import model.Habit;
 import model.Model;
 import org.mapstruct.factory.Mappers;
 import repository.ModelRepository;
@@ -12,27 +12,29 @@ import repository.impl.ModelRepositoryImpl;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
 public class ModelService {
 
     private final ModelMapper mapper = Mappers.getMapper(ModelMapper.class);
     private final ModelRepository repository = ModelRepositoryImpl.getInstance();
 
-    public ModelDto create(ModelDto dto) {
-        Model model = repository.create(mapper.toModel(dto));
-        return mapper.toDto(model);
+    public Model create(Model model) {
+        ModelEntity entity = repository.create(mapper.fromModelToEntity(model));
+        return mapper.fromEntityToModel(entity);
     }
 
-    public ModelDto update (ModelDto dto){
-        Model model = repository.update(mapper.toModel(dto));
-        return mapper.toDto(model);
+    public Model update(Model model) {
+        ModelEntity entity = repository.update(mapper.fromModelToEntity(model));
+        return mapper.fromEntityToModel(entity);
     }
 
-    public  void delete (ModelDto dto){
-        repository.delete(mapper.toModel(dto));
+    public void delete(Model model) {
+        repository.delete(mapper.fromModelToEntity(model));
     }
 
-    public Set<ModelDto> findAll(){
-        return repository.findAll().stream().map(mapper::toDto).collect(Collectors.toSet());
+    public Set<Model> findAll() {
+        return repository.findAll().stream().map(mapper::fromEntityToModel).collect(Collectors.toSet());
     }
 
 }
