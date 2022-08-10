@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Setter
 public class HabitService {
 
-    private final HabitMapper mapper = Mappers.getMapper(HabitMapper.class);
-    private final HabitRepository repository = HabitRepositoryImpl.getInstance();
+    private  HabitMapper mapper = Mappers.getMapper(HabitMapper.class);
+    private  HabitRepository repository = HabitRepositoryImpl.getInstance();
     public Habit create(Habit model) {
         HabitEntity entity = repository.create(mapper.fromModelToEntity(model));
         return mapper.fromEntityToModel(entity);

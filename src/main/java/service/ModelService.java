@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Setter
 public class ModelService {
 
-    private final ModelMapper mapper = Mappers.getMapper(ModelMapper.class);
-    private final ModelRepository repository = ModelRepositoryImpl.getInstance();
+    private  ModelMapper mapper = Mappers.getMapper(ModelMapper.class);
+    private  ModelRepository repository = ModelRepositoryImpl.getInstance();
 
     public Model create(Model model) {
         ModelEntity entity = repository.create(mapper.fromModelToEntity(model));

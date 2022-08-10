@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Setter
 public class ProfessionService {
 
-    private final ProfessionMapper mapper = Mappers.getMapper(ProfessionMapper.class);
-    private final ProfessionRepository repository = ProfessionRepositoryImpl.getInstance();
+    private  ProfessionMapper mapper = Mappers.getMapper(ProfessionMapper.class);
+    private  ProfessionRepository repository = ProfessionRepositoryImpl.getInstance();
 
     public Profession create(Profession model) {
         ProfessionEntity entity = repository.create(mapper.fromModelToEntity(model));
